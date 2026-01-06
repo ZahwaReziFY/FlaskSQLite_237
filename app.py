@@ -46,10 +46,10 @@ def edit(id):
     if not book:
         return "Buku tidak ditemukan", 404
     
-    if request.methop == 'POST':
+    if request.method == 'POST':
         judul = request.form['judul']
         penulis = request.form['penulis']
-        conn.execute("UPDATE books SET judul = ?, penulis WHERE id ?", (judul, penulis, id))
+        conn.execute("UPDATE books SET judul = ?, penulis = ? WHERE id = ?", (judul, penulis, id))
         conn.commit()
         conn.close()
         return redirect(url_for('index'))
@@ -65,6 +65,6 @@ def delete(id):
     conn.close()
     return redirect(url_for('index'))
 
-if __name__ == ' main ':
+if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=6001, debug=True)
